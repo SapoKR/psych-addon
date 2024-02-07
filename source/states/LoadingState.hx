@@ -309,8 +309,10 @@ class MultiCallback
 	
 	inline function log(msg):Void
 	{
+		#if debug
 		if (logId != null)
-			#if debug trace('$logId: $msg'); #end
+			trace('$logId: $msg')
+		#end
 	}
 	
 	public function getFired() return fired.copy();

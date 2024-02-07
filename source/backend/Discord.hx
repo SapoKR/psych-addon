@@ -35,11 +35,12 @@ class DiscordClient
 	
 	private static function onReady(request:cpp.RawConstPointer<DiscordUser>):Void {
 		var requestPtr:cpp.Star<DiscordUser> = cpp.ConstPointer.fromRaw(request).ptr;
-
+		#if debug
 		if (Std.parseInt(cast(requestPtr.discriminator, String)) != 0) //New Discord IDs/Discriminator system
-			#if debug trace('(Discord) Connected to User (${cast(requestPtr.username, String)}#${cast(requestPtr.discriminator, String)})'); #end
+			trace('(Discord) Connected to User (${cast(requestPtr.username, String)}#${cast(requestPtr.discriminator, String)})');
 		else //Old discriminators
-			#if debug trace('(Discord) Connected to User (${cast(requestPtr.username, String)})'); #end
+			trace('(Discord) Connected to User (${cast(requestPtr.username, String)})');
+		#end
 
 		changePresence();
 	}
