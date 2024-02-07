@@ -37,19 +37,19 @@ class DiscordClient
 		var requestPtr:cpp.Star<DiscordUser> = cpp.ConstPointer.fromRaw(request).ptr;
 
 		if (Std.parseInt(cast(requestPtr.discriminator, String)) != 0) //New Discord IDs/Discriminator system
-			trace('(Discord) Connected to User (${cast(requestPtr.username, String)}#${cast(requestPtr.discriminator, String)})');
+			#if debug trace('(Discord) Connected to User (${cast(requestPtr.username, String)}#${cast(requestPtr.discriminator, String)})'); #end
 		else //Old discriminators
-			trace('(Discord) Connected to User (${cast(requestPtr.username, String)})');
+			#if debug trace('(Discord) Connected to User (${cast(requestPtr.username, String)})'); #end
 
 		changePresence();
 	}
 
 	private static function onError(errorCode:Int, message:cpp.ConstCharStar):Void {
-		trace('Discord: Error ($errorCode: ${cast(message, String)})');
+		#if debug trace('Discord: Error ($errorCode: ${cast(message, String)})'); #end
 	}
 
 	private static function onDisconnected(errorCode:Int, message:cpp.ConstCharStar):Void {
-		trace('Discord: Disconnected ($errorCode: ${cast(message, String)})');
+		#if debug trace('Discord: Disconnected ($errorCode: ${cast(message, String)})'); #end
 	}
 
 	public static function initialize()
@@ -60,7 +60,7 @@ class DiscordClient
 		discordHandlers.errored = cpp.Function.fromStaticFunction(onError);
 		Discord.Initialize(clientID, cpp.RawPointer.addressOf(discordHandlers), 1, null);
 
-		if(!isInitialized) trace("Discord Client initialized");
+		#if debug if(!isInitialized) trace("Discord Client initialized"); #end
 
 		sys.thread.Thread.create(() ->
 		{
@@ -117,29 +117,4 @@ class DiscordClient
 		}
 		return newID;
 	}
-
-	#if MODS_ALLOWED
-	public static function loadModRPC()
-	{
-		var pack:Dynamic = Mods.getPack();
-		if(pack != null && pack.discordRPC != null && pack.discordRPC != clientID)
-		{
-			clientID = pack.discordRPC;
-			//trace('Changing clientID! $clientID, $_defaultID');
-		}
-	}
-	#end
-
-	#if LUA_ALLOWED
-	public static function addLuaCallbacks(lua:State) {
-		Lua_helper.add_callback(lua, "changeDiscordPresence", function(details:String, state:Null<String>, ?smallImageKey:String, ?hasStartTimestamp:Bool, ?endTimestamp:Float) {
-			changePresence(details, state, smallImageKey, hasStartTimestamp, endTimestamp);
-		});
-
-		Lua_helper.add_callback(lua, "changeDiscordClientID", function(?newID:String = null) {
-			if(newID == null) newID = _defaultID;
-			clientID = newID;
-		});
-	}
-	#end
 }

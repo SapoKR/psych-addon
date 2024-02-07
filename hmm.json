@@ -41,17 +41,7 @@
       "version": null
     },
     {
-      "name": "SScript",
-      "type": "haxelib",
-      "version": null
-    },
-    {
       "name": "hxcpp-debug-server",
-      "type": "haxelib",
-      "version": null
-    },
-    {
-      "name": "tjson",
       "type": "haxelib",
       "version": null
     },
@@ -68,13 +58,6 @@
       "dir": null,
       "ref": "dev",
       "url": "https://github.com/ShadowMario/flxanimate"
-    },
-    {
-      "name": "linc_luajit",
-      "type": "git",
-      "dir": null,
-      "ref": "master",
-      "url": "https://github.com/superpowers04/linc_luajit"
     }
   ]
 }

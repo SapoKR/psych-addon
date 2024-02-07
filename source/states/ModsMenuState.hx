@@ -551,7 +551,7 @@ class ModsMenuState extends MusicBeatState
 				modsList = Mods.parseList();
 				if(modsList.all.length > 0)
 				{
-					trace('mod(s) found! reloading');
+					#if debug trace('mod(s) found! reloading'); #end
 					reload();
 				}
 			}
@@ -716,7 +716,7 @@ class ModsMenuState extends MusicBeatState
 		{
 			if(mod == null)
 			{
-				trace('Mod #$i is null, maybe it was ' + modsList.all[i]);
+				#if debug trace('Mod #$i is null, maybe it was ' + modsList.all[i]); #end
 				continue;
 			}
 
@@ -737,7 +737,7 @@ class ModsMenuState extends MusicBeatState
 		if(position >= modsList.all.length) position = 0;
 		else if(position < 0) position = modsList.all.length-1;
 
-		trace('Moved mod $mod to position $position');
+		#if debug trace('Moved mod $mod to position $position'); #end
 		var id:Int = modsList.all.indexOf(mod);
 		if(position == id) return;
 
@@ -830,7 +830,7 @@ class ModItem extends FlxSpriteGroup
 			try
 			{
 				//trace('trying to load settings: $folder');
-				settings = tjson.TJSON.parse(data);
+				settings = cast Json.parse(data);
 			}
 			catch(e:Dynamic)
 			{
@@ -839,7 +839,7 @@ class ModItem extends FlxSpriteGroup
 				#if windows
 				lime.app.Application.current.window.alert(errorMsg, errorTitle);
 				#end
-				trace('$errorTitle - $errorMsg');
+				#if debug trace('$errorTitle - $errorMsg'); #end
 			}
 		}
 

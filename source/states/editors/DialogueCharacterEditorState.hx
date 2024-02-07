@@ -688,7 +688,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 				if(loadedChar.dialogue_pos != null) //Make sure it's really a dialogue character
 				{
 					var cutName:String = _file.name.substr(0, _file.name.length - 5);
-					trace("Successfully loaded file: " + cutName);
+					#if debug trace("Successfully loaded file: " + cutName); #end
 					character.jsonFile = loadedChar;
 					reloadCharacter();
 					reloadAnimationsDropDown();
@@ -706,7 +706,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		}
 		_file = null;
 		#else
-		trace("File couldn't be loaded! You aren't on Desktop, are you?");
+		#if debug trace("File couldn't be loaded! You aren't on Desktop, are you?"); #end
 		#end
 	}
 
@@ -719,7 +719,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		_file.removeEventListener(Event.CANCEL, onLoadCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
 		_file = null;
-		trace("Cancelled file loading.");
+		#if debug trace("Cancelled file loading."); #end
 	}
 
 	/**
@@ -731,7 +731,7 @@ class DialogueCharacterEditorState extends MusicBeatState
 		_file.removeEventListener(Event.CANCEL, onLoadCancel);
 		_file.removeEventListener(IOErrorEvent.IO_ERROR, onLoadError);
 		_file = null;
-		trace("Problem loading file");
+		#if debug trace("Problem loading file"); #end
 	}
 
 	function saveCharacter() {

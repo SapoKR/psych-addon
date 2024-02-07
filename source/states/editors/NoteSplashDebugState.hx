@@ -80,7 +80,7 @@ class NoteSplashDebugState extends MusicBeatState
 					try {
 						loadFrames();
 					} catch(e:Dynamic) {
-						trace('ERROR! $e');
+						#if debug trace('ERROR! $e'); #end
 						textureName = defaultTexture;
 						loadFrames();
 
@@ -98,7 +98,7 @@ class NoteSplashDebugState extends MusicBeatState
 					}
 
 				default:
-					trace('changed image to $text');
+					#if debug trace('changed image to $text'); #end
 			}
 
 		};
@@ -116,7 +116,7 @@ class NoteSplashDebugState extends MusicBeatState
 					nameInputText.hasFocus = false;
 				
 				default:
-					trace('changed anim name to $text');
+					#if debug trace('changed anim name to $text'); #end
 					config.anim = text;
 					curAnim = 1;
 					reloadAnims();
@@ -402,7 +402,7 @@ class NoteSplashDebugState extends MusicBeatState
 			});
 			if(loopContinue) maxAnims++;
 		}
-		trace('maxAnims: $maxAnims');
+		#if debug trace('maxAnims: $maxAnims'); #end
 		changeAnim();
 	}
 

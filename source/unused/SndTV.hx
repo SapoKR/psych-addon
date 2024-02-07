@@ -136,7 +136,7 @@ class SndTV {
 	}
 	
 	function onError(e) {
-		trace(e);
+		#if debug trace(e); #end
 	}
 	
 	public function count() {

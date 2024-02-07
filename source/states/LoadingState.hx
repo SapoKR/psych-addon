@@ -95,7 +95,7 @@ class LoadingState extends MusicBeatState
 	}
 	
 	function checkLibrary(library:String) {
-		trace(Assets.hasLibrary(library));
+		#if debug trace(Assets.hasLibrary(library)); #end
 		if (Assets.getLibrary(library) == null)
 		{
 			@:privateAccess
@@ -156,7 +156,7 @@ class LoadingState extends MusicBeatState
 		if(weekDir != null && weekDir.length > 0 && weekDir != '') directory = weekDir;
 
 		Paths.setCurrentLevel(directory);
-		trace('Setting asset folder to ' + directory);
+		#if debug trace('Setting asset folder to ' + directory); #end
 
 		/*#if NO_PRELOAD_ALL
 		var loaded:Bool = false;
@@ -310,7 +310,7 @@ class MultiCallback
 	inline function log(msg):Void
 	{
 		if (logId != null)
-			trace('$logId: $msg');
+			#if debug trace('$logId: $msg'); #end
 	}
 	
 	public function getFired() return fired.copy();

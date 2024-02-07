@@ -71,10 +71,6 @@ class TitleState extends MusicBeatState
 	override public function create():Void
 	{
 		Paths.clearStoredMemory();
-
-		#if LUA_ALLOWED
-		Mods.pushGlobalMods();
-		#end
 		Mods.loadTopMod();
 
 		FlxG.fixedTimestep = false;
@@ -91,22 +87,22 @@ class TitleState extends MusicBeatState
 
 		#if CHECK_FOR_UPDATES
 		if(ClientPrefs.data.checkForUpdates && !closedState) {
-			trace('checking for update');
+			#if debug trace('checking for update'); #end
 			var http = new haxe.Http("https://raw.githubusercontent.com/ShadowMario/FNF-PsychEngine/main/gitVersion.txt");
 
 			http.onData = function (data:String)
 			{
 				updateVersion = data.split('\n')[0].trim();
 				var curVersion:String = MainMenuState.psychEngineVersion.trim();
-				trace('version online: ' + updateVersion + ', your version: ' + curVersion);
+				#if debug trace('version online: ' + updateVersion + ', your version: ' + curVersion); #end
 				if(updateVersion != curVersion) {
-					trace('versions arent matching!');
+					#if debug trace('versions arent matching!'); #end
 					mustUpdate = true;
 				}
 			}
 
 			http.onError = function (error) {
-				trace('error: $error');
+				#if debug trace('error: $error'); #end
 			}
 
 			http.request();
@@ -116,7 +112,7 @@ class TitleState extends MusicBeatState
 		Highscore.load();
 
 		// IGNORE THIS!!!
-		titleJSON = tjson.TJSON.parse(Paths.getTextFromFile('images/gfDanceTitle.json'));
+		titleJSON = cast Json.parse(Paths.getTextFromFile('images/gfDanceTitle.json'));
 
 		#if TITLE_SCREEN_EASTER_EGG
 		if (FlxG.save.data.psychDevsEasterEgg == null) FlxG.save.data.psychDevsEasterEgg = ''; //Crash prevention
@@ -324,12 +320,8 @@ class TitleState extends MusicBeatState
 
 	function getIntroTextShit():Array<Array<String>>
 	{
-		#if MODS_ALLOWED
-		var firstArray:Array<String> = Mods.mergeAllTextsNamed('data/introText.txt', Paths.getSharedPath());
-		#else
 		var fullText:String = Assets.getText(Paths.txt('introText'));
 		var firstArray:Array<String> = fullText.split('\n');
-		#end
 		var swagGoodArray:Array<Array<String>> = [];
 
 		for (i in firstArray)

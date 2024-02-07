@@ -340,7 +340,7 @@ class CharacterEditorState extends MusicBeatState
 				}
 				/*hideGhostButton.active = true;
 				hideGhostButton.alpha = 1;*/
-				trace('created ghost image');
+				#if debug trace('created ghost image'); #end
 			}
 		});
 
@@ -452,11 +452,7 @@ class CharacterEditorState extends MusicBeatState
 
 			var characterPath:String = 'characters/$intended.json';
 			var path:String = Paths.getPath(characterPath, TEXT, null, true);
-			#if MODS_ALLOWED
-			if (FileSystem.exists(path))
-			#else
 			if (Assets.exists(path))
-			#end
 			{
 				_char = intended;
 				check_player.checked = character.isPlayer;
@@ -548,7 +544,7 @@ class CharacterEditorState extends MusicBeatState
 			reloadAnimList();
 			@:arrayAccess curAnim = Std.int(Math.max(0, character.animationsArray.indexOf(addedAnim)));
 			character.playAnim(addedAnim.anim, true);
-			trace('Added/Updated animation: ' + animationInputText.text);
+			#if debug trace('Added/Updated animation: ' + animationInputText.text); #end
 		});
 
 		var removeButton:FlxButton = new FlxButton(180, animationIndicesInputText.y + 60, "Remove", function() {
@@ -571,7 +567,7 @@ class CharacterEditorState extends MusicBeatState
 						updateTextColors();
 					}
 					reloadAnimList();
-					trace('Removed animation: ' + animationInputText.text);
+					#if debug trace('Removed animation: ' + animationInputText.text); #end
 					break;
 				}
 		});

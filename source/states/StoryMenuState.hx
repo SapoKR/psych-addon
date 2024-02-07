@@ -300,7 +300,7 @@ class StoryMenuState extends MusicBeatState
 			}
 			catch(e:Dynamic)
 			{
-				trace('ERROR! $e');
+				#if debug trace('ERROR! $e'); #end
 				return;
 			}
 			
@@ -324,10 +324,6 @@ class StoryMenuState extends MusicBeatState
 				LoadingState.loadAndSwitchState(new PlayState(), true);
 				FreeplayState.destroyFreeplayVocals();
 			});
-			
-			#if (MODS_ALLOWED && DISCORD_ALLOWED)
-			DiscordClient.loadModRPC();
-			#end
 		}
 		else FlxG.sound.play(Paths.sound('cancelMenu'));
 	}

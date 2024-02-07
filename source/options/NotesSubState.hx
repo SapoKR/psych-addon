@@ -336,7 +336,7 @@ class NotesSubState extends MusicBeatSubstate
 			{
 				Clipboard.text = getShaderColor().toHexString(false, false);
 				FlxG.sound.play(Paths.sound('scrollMenu'), 0.6);
-				trace('copied: ' + Clipboard.text);
+				#if debug trace('copied: ' + Clipboard.text); #end
 			}
 			hexTypeNum = -1;
 		}
